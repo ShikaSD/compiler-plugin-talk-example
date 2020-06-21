@@ -3,6 +3,7 @@ Example of how compiler plugin works by implementating a fraction of [kotlinx.se
 ## Where to look?
 
 `compiler-plugin` folder - the plugin itself
+
 `integration` folder - playground
 
 ### Making new classes available for user
