@@ -1,4 +1,4 @@
-Example of how compiler plugin works based on implementation of a fraction of kotlinx.serialization plugin.
+Example of how compiler plugin works by implementating a fraction of [kotlinx.serialization](https://github.com/JetBrains/kotlin/tree/master/plugins/kotlin-serialization) plugin.
 
 ## Where to look?
 
