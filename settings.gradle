@@ -1,0 +1,4 @@
+rootProject.name = 'talk-serialization-plugin'
+
+include ':compiler-plugin'
+include ':integration'

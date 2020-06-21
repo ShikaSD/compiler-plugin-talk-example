@@ -1,0 +1,20 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
+
+    kotlinCompilerPluginClasspath project(':compiler-plugin')
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += [
+            "-Xuse-ir",
+            "-Xdump-directory=${buildDir}/ir/",
+            "-Xphases-to-dump-after=ValidateIrBeforeLowering"
+        ]
+    }
+}

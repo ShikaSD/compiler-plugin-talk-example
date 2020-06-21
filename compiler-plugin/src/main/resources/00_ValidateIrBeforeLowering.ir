@@ -1,0 +1,246 @@
+MODULE_FRAGMENT name:<integration>
+  FILE fqName:<root> fileName:/Users/andreishikov/projects/test/talk-serialization-plugin/integration/src/main/kotlin/Data.kt
+    CLASS CLASS name:Data modality:FINAL visibility:public [data] superTypes:[kotlin.Any]
+      annotations:
+        Serializable(with = <null>)
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:<root>.Data
+      CONSTRUCTOR visibility:public <> (a:kotlin.Int, b:kotlin.String) returnType:<root>.Data [primary]
+        VALUE_PARAMETER name:a index:0 type:kotlin.Int
+        VALUE_PARAMETER name:b index:1 type:kotlin.String
+          EXPRESSION_BODY
+            CONST String type=kotlin.String value="42"
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () [primary] declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Data modality:FINAL visibility:public [data] superTypes:[kotlin.Any]'
+      PROPERTY name:a visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]
+          EXPRESSION_BODY
+            GET_VAR 'a: kotlin.Int declared in <root>.Data.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-a> visibility:public modality:FINAL <> ($this:<root>.Data) returnType:kotlin.Int
+          correspondingProperty: PROPERTY name:a visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:<root>.Data
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-a> (): kotlin.Int declared in <root>.Data'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.<get-a>' type=<root>.Data origin=null
+      PROPERTY name:b visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]
+          EXPRESSION_BODY
+            GET_VAR 'b: kotlin.String declared in <root>.Data.<init>' type=kotlin.String origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-b> visibility:public modality:FINAL <> ($this:<root>.Data) returnType:kotlin.String
+          correspondingProperty: PROPERTY name:b visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:<root>.Data
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-b> (): kotlin.String declared in <root>.Data'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.<get-b>' type=<root>.Data origin=null
+      CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+        $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:<root>.Data.Companion
+        CONSTRUCTOR visibility:private <> () returnType:<root>.Data.Companion [primary]
+          BLOCK_BODY
+            DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () [primary] declared in kotlin.Any'
+            INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]'
+        FUN name:serializer visibility:public modality:FINAL <> ($this:<root>.Data.Companion) returnType:kotlinx.serialization.KSerializer<<root>.Data>
+          $this: VALUE_PARAMETER name:<this> type:<root>.Data.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun serializer (): kotlinx.serialization.KSerializer<<root>.Data> declared in <root>.Data.Companion'
+              GET_OBJECT 'CLASS OBJECT name:$serializer modality:FINAL visibility:private superTypes:[kotlinx.serialization.KSerializer<<root>.Data>]' type=<root>.Data.$serializer
+        FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+          overridden:
+            public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in kotlin.Any
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+          VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+        FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+          overridden:
+            public open fun hashCode (): kotlin.Int declared in kotlin.Any
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+          overridden:
+            public open fun toString (): kotlin.String declared in kotlin.Any
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      CLASS OBJECT name:$serializer modality:FINAL visibility:private superTypes:[kotlinx.serialization.KSerializer<<root>.Data>]
+        $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:<root>.Data.$serializer
+        CONSTRUCTOR visibility:private <> () returnType:<root>.Data.$serializer [primary]
+          BLOCK_BODY
+            DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () [primary] declared in kotlin.Any'
+            INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:$serializer modality:FINAL visibility:private superTypes:[kotlinx.serialization.KSerializer<<root>.Data>]'
+        PROPERTY name:delegate visibility:private modality:FINAL [val]
+          FIELD PROPERTY_BACKING_FIELD name:delegate type:kotlinx.serialization.KSerializer<kotlin.String> visibility:private [final]
+            EXPRESSION_BODY
+              CALL 'public final fun serializer (): kotlinx.serialization.KSerializer<kotlin.String> declared in kotlinx.serialization.builtins.PrimitiveSerializersKt' type=kotlinx.serialization.KSerializer<kotlin.String> origin=null
+                $receiver: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.String.Companion
+          FUN DEFAULT_PROPERTY_ACCESSOR name:<get-delegate> visibility:private modality:FINAL <> ($this:<root>.Data.$serializer) returnType:kotlinx.serialization.KSerializer<kotlin.String>
+            correspondingProperty: PROPERTY name:delegate visibility:private modality:FINAL [val]
+            $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
+            BLOCK_BODY
+              RETURN type=kotlin.Nothing from='private final fun <get-delegate> (): kotlinx.serialization.KSerializer<kotlin.String> declared in <root>.Data.$serializer'
+                GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:delegate type:kotlinx.serialization.KSerializer<kotlin.String> visibility:private [final]' type=kotlinx.serialization.KSerializer<kotlin.String> origin=null
+                  receiver: GET_VAR '<this>: <root>.Data.$serializer declared in <root>.Data.$serializer.<get-delegate>' type=<root>.Data.$serializer origin=null
+        PROPERTY name:descriptor visibility:public modality:OPEN [val]
+          FIELD PROPERTY_BACKING_FIELD name:descriptor type:kotlinx.serialization.SerialDescriptor visibility:private [final]
+            EXPRESSION_BODY
+              CALL 'public abstract fun <get-descriptor> (): kotlinx.serialization.SerialDescriptor declared in kotlinx.serialization.KSerializer' type=kotlinx.serialization.SerialDescriptor origin=GET_PROPERTY
+                $this: CALL 'private final fun <get-delegate> (): kotlinx.serialization.KSerializer<kotlin.String> declared in <root>.Data.$serializer' type=kotlinx.serialization.KSerializer<kotlin.String> origin=GET_PROPERTY
+                  $this: GET_VAR '<this>: <root>.Data.$serializer declared in <root>.Data.$serializer' type=<root>.Data.$serializer origin=null
+          FUN DEFAULT_PROPERTY_ACCESSOR name:<get-descriptor> visibility:public modality:OPEN <> ($this:<root>.Data.$serializer) returnType:kotlinx.serialization.SerialDescriptor
+            correspondingProperty: PROPERTY name:descriptor visibility:public modality:OPEN [val]
+            overridden:
+              public abstract fun <get-descriptor> (): kotlinx.serialization.SerialDescriptor declared in kotlinx.serialization.KSerializer
+            $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
+            BLOCK_BODY
+              RETURN type=kotlin.Nothing from='public open fun <get-descriptor> (): kotlinx.serialization.SerialDescriptor declared in <root>.Data.$serializer'
+                GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:descriptor type:kotlinx.serialization.SerialDescriptor visibility:private [final]' type=kotlinx.serialization.SerialDescriptor origin=null
+                  receiver: GET_VAR '<this>: <root>.Data.$serializer declared in <root>.Data.$serializer.<get-descriptor>' type=<root>.Data.$serializer origin=null
+        FUN name:serialize visibility:public modality:OPEN <> ($this:<root>.Data.$serializer, encoder:kotlinx.serialization.Encoder, value:<root>.Data) returnType:kotlin.Unit
+          overridden:
+            public abstract fun serialize (encoder: kotlinx.serialization.Encoder, value: T of kotlinx.serialization.KSerializer): kotlin.Unit [fake_override] declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
+          VALUE_PARAMETER name:encoder index:0 type:kotlinx.serialization.Encoder
+          VALUE_PARAMETER name:value index:1 type:<root>.Data
+          BLOCK_BODY
+            CALL 'public abstract fun serialize (encoder: kotlinx.serialization.Encoder, value: T of kotlinx.serialization.KSerializer): kotlin.Unit [fake_override] declared in kotlinx.serialization.KSerializer' type=kotlin.Unit origin=null
+              $this: CALL 'private final fun <get-delegate> (): kotlinx.serialization.KSerializer<kotlin.String> declared in <root>.Data.$serializer' type=kotlinx.serialization.KSerializer<kotlin.String> origin=GET_PROPERTY
+                $this: GET_VAR '<this>: <root>.Data.$serializer declared in <root>.Data.$serializer.serialize' type=<root>.Data.$serializer origin=null
+              encoder: GET_VAR 'encoder: kotlinx.serialization.Encoder declared in <root>.Data.$serializer.serialize' type=kotlinx.serialization.Encoder origin=null
+              value: CALL 'public open fun toString (): kotlin.String declared in <root>.Data' type=kotlin.String origin=null
+                $this: GET_VAR 'value: <root>.Data declared in <root>.Data.$serializer.serialize' type=<root>.Data origin=null
+        FUN name:deserialize visibility:public modality:OPEN <> ($this:<root>.Data.$serializer, decoder:kotlinx.serialization.Decoder) returnType:<root>.Data
+          overridden:
+            public abstract fun deserialize (decoder: kotlinx.serialization.Decoder): T of kotlinx.serialization.KSerializer [fake_override] declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
+          VALUE_PARAMETER name:decoder index:0 type:kotlinx.serialization.Decoder
+          BLOCK_BODY
+            CALL 'public final fun TODO (): kotlin.Nothing [inline] declared in kotlin.StandardKt' type=kotlin.Nothing origin=null
+        FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+          overridden:
+            public open fun equals (other: kotlin.Any?): kotlin.Boolean [fake_override,operator] declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+          VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+        FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+          overridden:
+            public open fun hashCode (): kotlin.Int [fake_override] declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        FUN FAKE_OVERRIDE name:patch visibility:public modality:OPEN <> ($this:kotlinx.serialization.KSerializer<<root>.Data>, decoder:kotlinx.serialization.Decoder, old:<root>.Data) returnType:<root>.Data [fake_override]
+          overridden:
+            public open fun patch (decoder: kotlinx.serialization.Decoder, old: T of kotlinx.serialization.KSerializer): T of kotlinx.serialization.KSerializer declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:kotlinx.serialization.KSerializer<<root>.Data>
+          VALUE_PARAMETER name:decoder index:0 type:kotlinx.serialization.Decoder
+          VALUE_PARAMETER name:old index:1 type:<root>.Data
+        FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+          overridden:
+            public open fun toString (): kotlin.String [fake_override] declared in kotlinx.serialization.KSerializer
+          $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL <> ($this:<root>.Data) returnType:kotlin.Int [operator]
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int [operator] declared in <root>.Data'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.component1' type=<root>.Data origin=null
+      FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL <> ($this:<root>.Data) returnType:kotlin.String [operator]
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun component2 (): kotlin.String [operator] declared in <root>.Data'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+              receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.component2' type=<root>.Data origin=null
+      FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:<root>.Data, a:kotlin.Int, b:kotlin.String) returnType:<root>.Data
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        VALUE_PARAMETER name:a index:0 type:kotlin.Int
+          EXPRESSION_BODY
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.copy' type=<root>.Data origin=null
+        VALUE_PARAMETER name:b index:1 type:kotlin.String
+          EXPRESSION_BODY
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+              receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.copy' type=<root>.Data origin=null
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun copy (a: kotlin.Int, b: kotlin.String): <root>.Data declared in <root>.Data'
+            CONSTRUCTOR_CALL 'public constructor <init> (a: kotlin.Int, b: kotlin.String) [primary] declared in <root>.Data' type=<root>.Data origin=null
+              a: GET_VAR 'a: kotlin.Int declared in <root>.Data.copy' type=kotlin.Int origin=null
+              b: GET_VAR 'b: kotlin.String declared in <root>.Data.copy' type=kotlin.String origin=null
+      FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN <> ($this:<root>.Data) returnType:kotlin.String
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in <root>.Data'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Data("
+              CONST String type=kotlin.String value="a="
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.toString' type=<root>.Data origin=null
+              CONST String type=kotlin.String value=", "
+              CONST String type=kotlin.String value="b="
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.toString' type=<root>.Data origin=null
+              CONST String type=kotlin.String value=")"
+      FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN <> ($this:<root>.Data) returnType:kotlin.Int
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in <root>.Data'
+            CALL 'public final fun plus (other: kotlin.Int): kotlin.Int [operator] declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: CALL 'public final fun times (other: kotlin.Int): kotlin.Int [operator] declared in kotlin.Int' type=kotlin.Int origin=null
+                $this: CALL 'public open fun hashCode (): kotlin.Int [fake_override] declared in kotlin.Int' type=kotlin.Int origin=null
+                  $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                    receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.hashCode' type=<root>.Data origin=null
+                other: CONST Int type=kotlin.Int value=31
+              other: CALL 'public open fun hashCode (): kotlin.Int [fake_override] declared in kotlin.String' type=kotlin.Int origin=null
+                $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                  receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.hashCode' type=<root>.Data origin=null
+      FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN <> ($this:<root>.Data, other:kotlin.Any?) returnType:kotlin.Boolean [operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:<root>.Data
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+        BLOCK_BODY
+          WHEN type=kotlin.Unit origin=null
+            BRANCH
+              if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+                arg0: GET_VAR '<this>: <root>.Data declared in <root>.Data.equals' type=<root>.Data origin=null
+                arg1: GET_VAR 'other: kotlin.Any? declared in <root>.Data.equals' type=kotlin.Any? origin=null
+              then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.Data'
+                CONST Boolean type=kotlin.Boolean value=true
+          WHEN type=kotlin.Unit origin=null
+            BRANCH
+              if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=<root>.Data
+                GET_VAR 'other: kotlin.Any? declared in <root>.Data.equals' type=kotlin.Any? origin=null
+              then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.Data'
+                CONST Boolean type=kotlin.Boolean value=false
+          VAR IR_TEMPORARY_VARIABLE name:tmp0_other_with_cast type:<root>.Data [val]
+            TYPE_OP type=<root>.Data origin=CAST typeOperand=<root>.Data
+              GET_VAR 'other: kotlin.Any? declared in <root>.Data.equals' type=kotlin.Any? origin=null
+          WHEN type=kotlin.Unit origin=null
+            BRANCH
+              if: CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+                $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                  arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                    receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.equals' type=<root>.Data origin=null
+                  arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                    receiver: GET_VAR 'val tmp0_other_with_cast: <root>.Data [val] declared in <root>.Data.equals' type=<root>.Data origin=null
+              then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.Data'
+                CONST Boolean type=kotlin.Boolean value=false
+          WHEN type=kotlin.Unit origin=null
+            BRANCH
+              if: CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+                $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                  arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                    receiver: GET_VAR '<this>: <root>.Data declared in <root>.Data.equals' type=<root>.Data origin=null
+                  arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                    receiver: GET_VAR 'val tmp0_other_with_cast: <root>.Data [val] declared in <root>.Data.equals' type=<root>.Data origin=null
+              then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.Data'
+                CONST Boolean type=kotlin.Boolean value=false
+          RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.Data'
+            CONST Boolean type=kotlin.Boolean value=true
+    FUN name:main visibility:public modality:FINAL <> () returnType:kotlin.Unit
+      BLOCK_BODY
+        VAR name:value type:<root>.Data [val]
+          CONSTRUCTOR_CALL 'public constructor <init> (a: kotlin.Int, b: kotlin.String) [primary] declared in <root>.Data' type=<root>.Data origin=null
+            a: CONST Int type=kotlin.Int value=0
+        CALL 'public final fun println (message: kotlin.Any?): kotlin.Unit [inline] declared in kotlin.io.ConsoleKt' type=kotlin.Unit origin=null
+          message: CALL 'public final fun toJson <T> (serializer: kotlinx.serialization.SerializationStrategy<T of kotlinx.serialization.json.Json.Default.toJson>, value: T of kotlinx.serialization.json.Json.Default.toJson): kotlinx.serialization.json.JsonElement declared in kotlinx.serialization.json.Json.Default' type=kotlinx.serialization.json.JsonElement origin=null
+            <T>: <root>.Data
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Default modality:FINAL visibility:public [companion] superTypes:[kotlinx.serialization.StringFormat]' type=kotlinx.serialization.json.Json.Default
+            serializer: CALL 'public final fun serializer (): kotlinx.serialization.KSerializer<<root>.Data> declared in <root>.Data.Companion' type=kotlinx.serialization.KSerializer<<root>.Data> origin=null
+              $this: GET_OBJECT 'CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=<root>.Data.Companion
+            value: GET_VAR 'val value: <root>.Data [val] declared in <root>.main' type=<root>.Data origin=null
