@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 data class Data(val a: Int, val b: String = "42")
 
 @Serializable
-inline class Failure(val string: String)
+class Failure(val string: String)
 
 @Serializable
 class SomeOtherData(val string: String)

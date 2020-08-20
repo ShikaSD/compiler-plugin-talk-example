@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.DeclarationDescriptor
 import org.jetbrains.kotlin.diagnostics.DiagnosticFactory0
-import org.jetbrains.kotlin.diagnostics.reportFromPlugin
 import org.jetbrains.kotlin.psi.KtAnnotationEntry
 import org.jetbrains.kotlin.psi.KtDeclaration
 import org.jetbrains.kotlin.resolve.BindingTrace
@@ -22,7 +21,7 @@ class SerializationDeclarationChecker : DeclarationChecker {
         if (descriptor.isInline) {
             context.trace.reportOnSerializableAnnotation(
                 descriptor,
-                INLINE_CLASSES_NOT_SUPPORTED
+                SerializationErrors.INLINE_CLASSES_NOT_SUPPORTED
             )
         }
     }
@@ -32,9 +31,8 @@ class SerializationDeclarationChecker : DeclarationChecker {
         error: DiagnosticFactory0<PsiElement>
     ) {
         descriptor.findSerializableAnnotation()?.let {
-            reportFromPlugin(
-                error.on(it),
-                SerializationPluginErrorsRendering
+            report(
+                error.on(it)
             )
         }
     }

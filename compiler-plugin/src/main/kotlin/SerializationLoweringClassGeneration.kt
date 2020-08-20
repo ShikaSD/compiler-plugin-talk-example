@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
-import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.ir.builders.declarations.addConstructor
 import org.jetbrains.kotlin.ir.builders.declarations.addFunction
 import org.jetbrains.kotlin.ir.builders.declarations.addGetter
@@ -33,13 +32,15 @@ import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.types.createType
 import org.jetbrains.kotlin.ir.types.impl.IrSimpleTypeImpl
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.findFirstFunction
+import org.jetbrains.kotlin.ir.util.functions
+import org.jetbrains.kotlin.ir.util.getPropertyGetter
 import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.ir.util.properties
 import org.jetbrains.kotlin.ir.util.referenceFunction
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.psi2ir.findFirstFunction
 
 /**
  * see IR dump in resources folder
@@ -60,7 +61,8 @@ import org.jetbrains.kotlin.psi2ir.findFirstFunction
 class SerializationLoweringClassGeneration(
     private val pluginContext: IrPluginContext
 ) {
-    private val kSerializer = pluginContext.moduleDescriptor.findClassAcrossModuleDependencies(ClassIds.KSERIALIZER)
+    private val kSerializer = pluginContext.referenceClass(ClassIds.KSERIALIZER.asSingleFqName())
+        ?: throw IllegalStateException("Serialization lib is not available")
 
     fun createSerializerImpl(
         irClass: IrClass
@@ -75,7 +77,7 @@ class SerializationLoweringClassGeneration(
             kind = ClassKind.OBJECT
         }
 
-        serializerCls.superTypes.add(pluginContext.kSerializerOf(irClass.symbol))
+        serializerCls.superTypes = listOf(pluginContext.kSerializerOf(irClass.symbol))
         irClass.addChild(serializerCls)
 
         /**
@@ -238,7 +240,7 @@ class SerializationLoweringClassGeneration(
          * public abstract fun <get-descriptor> (): kotlinx.serialization.SerialDescriptor declared in kotlinx.serialization.KSerializer
          * $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
          */
-        getter.overriddenSymbols.add(kserializerPropertyAccessor as IrSimpleFunctionSymbol)
+        getter.overriddenSymbols = listOf(kserializerPropertyAccessor as IrSimpleFunctionSymbol)
         getter.dispatchReceiverParameter = thisReceiver!!.copyTo(getter)
 
         /**
@@ -270,7 +272,7 @@ class SerializationLoweringClassGeneration(
          * public abstract fun serialize (encoder: kotlinx.serialization.Encoder, value: T of kotlinx.serialization.KSerializer): kotlin.Unit [fake_override] declared in kotlinx.serialization.KSerializer
          */
         val serializeFunction = pluginContext.kSerializerFunction("serialize")
-        function.overriddenSymbols.add(serializeFunction as IrSimpleFunctionSymbol)
+        function.overriddenSymbols = listOf(serializeFunction as IrSimpleFunctionSymbol)
 
         /**
          * $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
@@ -342,7 +344,7 @@ class SerializationLoweringClassGeneration(
          * overridden:
          * public abstract fun deserialize (decoder: kotlinx.serialization.Decoder): T of kotlinx.serialization.KSerializer [fake_override] declared in kotlinx.serialization.KSerializer
          */
-        function.overriddenSymbols.add(pluginContext.kSerializerFunction("deserialize") as IrSimpleFunctionSymbol)
+        function.overriddenSymbols = listOf(pluginContext.kSerializerFunction("deserialize") as IrSimpleFunctionSymbol)
 
         /**
          * $this: VALUE_PARAMETER name:<this> type:<root>.Data.$serializer
@@ -389,22 +391,12 @@ class SerializationLoweringClassGeneration(
         return symbolTable.referenceClass(cls!!)
     }
 
-    private fun IrPluginContext.kSerializerPropertyAccessor(name: String): IrFunctionSymbol {
-        val vars = kSerializer?.unsubstitutedMemberScope?.getContributedVariables(Name.identifier(name), NoLookupLocation.FROM_BACKEND)
-        val property = vars?.first { it.name.asString() == name }
-        return symbolTable.referenceFunction(property!!.getter!!)
-    }
+    private fun IrPluginContext.kSerializerPropertyAccessor(name: String): IrFunctionSymbol =
+        kSerializer.owner.getPropertyGetter(name)!!
 
-    private fun IrPluginContext.kSerializerFunction(name: String): IrFunctionSymbol {
-        return symbolTable.referenceFunction(kSerializer?.findFirstFunction(name) { true }!!)
-    }
+    private fun IrPluginContext.kSerializerFunction(name: String): IrFunctionSymbol =
+        kSerializer.owner.functions.first { name == it.name.asString() }.symbol
 
-    private fun IrPluginContext.todoSymbol(): IrFunctionSymbol {
-        val kotlinPackage = moduleDescriptor.getPackage(FqName("kotlin"))
-        val todoFunction = kotlinPackage.fragments.mapNotNull {
-            it.getMemberScope().getContributedFunctions(Name.identifier("TODO"), NoLookupLocation.FROM_BACKEND)
-                .firstOrNull { it.name.asString() == "TODO" }
-        }.first()
-        return symbolTable.referenceFunction(todoFunction)
-    }
+    private fun IrPluginContext.todoSymbol(): IrFunctionSymbol =
+        referenceFunctions(FqName("kotlin.TODO")).first()
 }
