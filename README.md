@@ -1,5 +1,30 @@
 Example of how compiler plugin works by implementating a fraction of [kotlinx.serialization](https://github.com/JetBrains/kotlin/tree/master/plugins/kotlin-serialization) plugin.
 
+Given:
+```kotlin
+@Serializable
+class Data(val i: String)
+```
+
+Generates:
+```kotlin
+@Serializable
+class Data(val i: String) {
+    companion object {
+        fun serializer(): KSerializer<Data> = `$serializer`
+    }
+       
+    private object `$serializer` : KSerializer<Data> {
+        private val delegate = StringSerializer()
+        override val descriptor = delegate.descriptor
+        override fun serialize(encoder: Encoder, data: Data) =
+            delegate.serialize(encoder, data.toString())
+        override fun deserialize(decoder: Decoder) = 
+            TODO()
+    }
+}
+```
+
 ## Where to look?
 
 `compiler-plugin` folder - the plugin itself
@@ -12,7 +37,7 @@ See [`SerializationResolveExtension`](compiler-plugin/src/main/kotlin/Serializat
 
 ### Handling errors
 
-See [`Errors`](compiler-plugin/src/main/kotlin/Errors.kt) and [`SerializationDeclarationChecker`](compiler-plugin/src/main/kotlin/SerializationDeclarationChecker.kt) in `compiler-plugin` folder
+See [`SerializationErrors`](compiler-plugin/src/main/kotlin/SerializationErrors.kt) and [`SerializationDeclarationChecker`](compiler-plugin/src/main/kotlin/SerializationDeclarationChecker.kt) in `compiler-plugin` folder
 
 ### Generating IR
 
