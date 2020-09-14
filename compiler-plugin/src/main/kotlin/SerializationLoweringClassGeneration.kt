@@ -24,6 +24,7 @@ import org.jetbrains.kotlin.ir.expressions.impl.IrCallImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrDelegatingConstructorCallImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetFieldImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetObjectValueImpl
+import org.jetbrains.kotlin.ir.expressions.impl.IrGetValueImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrInstanceInitializerCallImpl
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrConstructorSymbol
@@ -149,26 +150,31 @@ class SerializationLoweringClassGeneration(
          * FIELD PROPERTY_BACKING_FIELD name:delegate type:kotlinx.serialization.KSerializer<kotlin.String> visibility:private [final]
          */
         property.backingField = buildField {
+            origin = IrDeclarationOrigin.PROPERTY_BACKING_FIELD
             name = property.name
             visibility = property.visibility
             modality = property.modality
             type = pluginContext.kSerializerOf(pluginContext.symbols.string)
+            isFinal = true
         }
 
         /**
          * GET_OBJECT 'CLASS OBJECT name:StringSerializer modality:FINAL visibility:public superTypes:[kotlinx.serialization.KSerializer<kotlin.String>]' type=kotlinx.serialization.internal.StringSerializer
          */
+        val stringSerializer = pluginContext.stringSerializer()
+        val stringSerializerType = stringSerializer.createType(hasQuestionMark = false, arguments = emptyList())
         property.backingField?.initializer =
             pluginContext.exprBody(
                 property.symbol,
                 IrGetObjectValueImpl(
                     startOffset = property.startOffset,
                     endOffset = property.endOffset,
-                    type = pluginContext.stringSerializer().createType(hasQuestionMark = false, arguments = emptyList()),
-                    symbol = pluginContext.stringSerializer()
+                    type = stringSerializerType,
+                    symbol = stringSerializer
                 )
             )
         property.backingField?.parent = this
+        property.backingField?.correspondingPropertySymbol = property.symbol
 
         // skipping getter
     }
@@ -195,6 +201,8 @@ class SerializationLoweringClassGeneration(
             name = property.name
             type = serialDescriptorType
             visibility = Visibilities.PRIVATE
+            isFinal = true
+            isStatic = false
         }
 
         /**
@@ -220,10 +228,17 @@ class SerializationLoweringClassGeneration(
                         property.endOffset,
                         delegateProperty.backingField!!.symbol,
                         delegateProperty.backingField!!.type
-                    )
+                    ).also {getField ->
+                        getField.receiver = IrGetValueImpl(
+                            property.startOffset,
+                            property.endOffset,
+                            thisReceiver!!.symbol
+                        )
+                    }
             }
         )
         property.backingField?.parent = this
+        property.backingField?.correspondingPropertySymbol = property.symbol
 
         /**
          * FUN DEFAULT_PROPERTY_ACCESSOR name:<get-descriptor> visibility:public modality:OPEN <> ($this:<root>.Data.$serializer) returnType:kotlinx.serialization.SerialDescriptor
@@ -233,6 +248,7 @@ class SerializationLoweringClassGeneration(
             visibility = Visibilities.PUBLIC
             modality = Modality.OPEN
             returnType = serialDescriptorType
+            origin = IrDeclarationOrigin.DEFAULT_PROPERTY_ACCESSOR
         }
 
         /**
